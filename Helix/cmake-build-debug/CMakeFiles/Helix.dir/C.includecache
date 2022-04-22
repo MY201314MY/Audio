@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../pub/mp3dec.h
+
+D:/project/CLion/Helix/main.c
+stdio.h
+-
+stdint.h
+-
+stdlib.h
+-
+string.h
+-
+math.h
+-
+../pub/mp3dec.h
+D:/project/CLion/pub/mp3dec.h
+

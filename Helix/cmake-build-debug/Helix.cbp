@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Helix"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="D:/project/CLion/Helix/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Helix">
+				<Option output="D:/project/CLion/Helix/cmake-build-debug/Helix.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/project/CLion/Helix/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="D:/project/CLion/Helix/real"/>
+					<Add directory="D:/software/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="D:/software/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="D:/software/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 Helix"/>
+					<CompileFile command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Helix/fast">
+				<Option output="D:/project/CLion/Helix/cmake-build-debug/Helix.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/project/CLion/Helix/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="D:/project/CLion/Helix/real"/>
+					<Add directory="D:/software/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="D:/software/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="D:/software/mingw/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 Helix/fast"/>
+					<CompileFile command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="D:/project/CLion/Helix/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="D:/project/CLion/Helix/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/software/mingw/mingw64/bin/mingw32-make.exe -f &quot;D:/project/CLion/Helix/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="D:/project/CLion/Helix/main.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/mp3dec.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/mp3tabs.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/pre/play.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/pre/play.h">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/bitstream.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/buffers.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/dct32.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/dequant.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/dqchan.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/huffman.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/hufftabs.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/imdct.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/polyphase.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/scalfact.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/stproc.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/subband.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/real/trigtabs.c">
+			<Option target="Helix"/>
+		</Unit>
+		<Unit filename="D:/project/CLion/Helix/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

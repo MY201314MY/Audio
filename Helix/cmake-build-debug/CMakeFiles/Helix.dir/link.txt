@@ -1,0 +1,3 @@
+"D:\software\CLion\CLion 2020.3.4\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\Helix.dir/objects.a
+D:\software\mingw\mingw64\bin\ar.exe cr CMakeFiles\Helix.dir/objects.a @CMakeFiles\Helix.dir\objects1.rsp
+D:\software\mingw\mingw64\bin\gcc.exe -g   -Wl,--whole-archive CMakeFiles\Helix.dir/objects.a -Wl,--no-whole-archive  -o Helix.exe -Wl,--out-implib,libHelix.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Helix.dir\linklibs.rsp

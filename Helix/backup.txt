@@ -1,0 +1,581 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include "../pub/mp3dec.h"
+
+int main() {
+    int16_t targetPCM[128*2048];
+    unsigned char buffer[128*1024] = {0};
+    MP3FrameInfo frameInfo;
+
+    printf("This is designed by Apple in Cal.\n");
+
+    HMP3Decoder hmp3decoder = MP3InitDecoder();
+
+    FILE *fp = fopen("../audio/maria.mp3", "rb+");
+    fseek(fp, 0, SEEK_END);
+    int count = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    fread(buffer, count, 1, fp);
+
+    int offset = MP3FindSyncWord(buffer, count);
+    printf("offset:%d -- count:%d\r\n", offset, count);
+
+    uint8_t *p = buffer + offset;
+    count -= offset;
+    int err = MP3Decode(hmp3decoder, &p, &offset, targetPCM, 0);
+    printf("error:%d\r\n", err);
+
+    printf("offset:%d", offset);
+
+    if(err == 0) {
+        for (int i = 0; i < 128*2048; i++) {
+            if(*(targetPCM + i) !=0 )
+                ;//printf("i:%d value:%04d\r\n", i, *(targetPCM + i));
+        }
+    }
+
+    fclose(fp);
+    MP3FreeDecoder(hmp3decoder);
+
+    return 0;
+}
+
+void decode(uint16_t *outbuf)
+{
+    offset = MP3FindSyncWord(readPtr, READBUF_SIZE);
+
+    if(offset < 0)
+    {
+        stop();
+
+    }
+    else
+    {
+        readPtr += offset;                         //data start point
+        bytesLeft -= offset;                 //in buffer
+        MP3Decode(hMP3Decoder, &readPtr, &bytesLeft, outbuf, 0);
+
+        if (bytesLeft < READBUF_SIZE)
+        {
+            memmove(readBuf,readPtr,bytesLeft);
+            fr = f_read(&fil, readBuf + bytesLeft, READBUF_SIZE - bytesLeft, &cnt);
+            if (cnt < READBUF_SIZE - bytesLeft);
+                memset(readBuf + bytesLeft + cnt, 0, READBUF_SIZE - bytesLeft - cnt);
+            bytesLeft=READBUF_SIZE;
+            readPtr=readBuf;
+            if(fr || cnt == 0){
+                stop();
+                next_song();
+            }
+        }
+    }
+}
+
+
+
+
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include "../pub/mp3dec.h"
+
+int main() {
+    int16_t targetPCM[128*2048];
+    unsigned char buffer[128*1024] = {0};
+    MP3FrameInfo frameInfo;
+
+    memset(targetPCM, 0, sizeof (targetPCM));
+
+    printf("This is designed by Apple in Cal.\n");
+
+    HMP3Decoder hmp3decoder = MP3InitDecoder();
+
+    FILE *fp = fopen("../audio/maria.mp3", "rb+");
+    fseek(fp, 0, SEEK_END);
+    int count = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    fread(buffer, count, 1, fp);
+
+    int offset = 0;
+    unsigned char *p = buffer;
+    while (1) {
+        if(offset<0) break;
+
+        offset = MP3FindSyncWord(p, count);
+
+        printf("offset:%d -- count:%d\r\n", offset, count);
+        p = buffer + offset;
+        count -= offset;
+        int err = MP3Decode(hmp3decoder, &p, &offset, targetPCM, 0);
+        printf("error:%d\r\n", err);
+
+        MP3GetLastFrameInfo(hmp3decoder, &frameInfo);
+        printf("bitrate:%d nChans:%d samprate:%d bitsPerSample:%d outputSamps:%d layer:%d version:%d\r\n",
+               frameInfo.bitrate,
+               frameInfo.nChans, frameInfo.samprate, frameInfo.bitsPerSample, frameInfo.outputSamps, frameInfo.layer,
+               frameInfo.version);
+
+        printf("offset:%d\r\n", offset);
+
+        if (err == 0) {
+            for (int i = 0; i < 128 * 2048; i++) {
+                if (*(targetPCM + i) != 0)
+                    printf("i:%d value:%04d\r\n", i, *(targetPCM + i));
+            }
+        }
+    }
+    fclose(fp);
+    MP3FreeDecoder(hmp3decoder);
+
+    return 0;
+}
+
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include "../pub/mp3dec.h"
+
+int main() {
+    int16_t targetPCM[128*2048];
+    unsigned char buffer[128*1024] = {0};
+    MP3FrameInfo frameInfo;
+
+    memset(targetPCM, 0, sizeof (targetPCM));
+
+    printf("This is designed by Apple in Cal.\n");
+
+    HMP3Decoder hmp3decoder = MP3InitDecoder();
+
+    FILE *fp = fopen("../audio/maria.mp3", "rb+");
+    fseek(fp, 0, SEEK_END);
+    int count = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    fread(buffer, count, 1, fp);
+
+    int offset = 0;
+    unsigned char *p = buffer;
+    while (1) {
+        offset = MP3FindSyncWord(p, count);
+        if(offset<0)
+        {printf("offset:%d", offset);break;}
+
+        printf("offset:%d -- count:%d\r\n", offset, count);
+        p += offset;
+        count -= offset;
+        printf("P:0x%08X\r\n", p);
+        int err = MP3Decode(hmp3decoder, &p, &offset, targetPCM, 0);
+        printf("error:%d\r\n", err);
+        MP3GetLastFrameInfo(hmp3decoder, &frameInfo);
+        printf("bitrate:%d nChans:%d samprate:%d bitsPerSample:%d outputSamps:%d layer:%d version:%d\r\n",
+               frameInfo.bitrate,
+               frameInfo.nChans, frameInfo.samprate, frameInfo.bitsPerSample, frameInfo.outputSamps, frameInfo.layer,
+               frameInfo.version);
+
+        if (err == 0) {
+            for (int i = 0; i < 128 * 2048; i++) {
+                if (*(targetPCM + i) != 0)
+                    printf("i:%d value:%04d\r\n", i, *(targetPCM + i));
+            }
+        }
+    }
+    fclose(fp);
+    MP3FreeDecoder(hmp3decoder);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include "../pub/mp3dec.h"
+#include "pub/mp3common.h"
+
+int main() {
+    int16_t output[10*1024];
+    int16_t targetPCM[1024];
+    unsigned char buffer[10*1024] = {0};
+    MP3FrameInfo frameInfo;
+
+    memset(targetPCM, 0, sizeof (targetPCM));
+    memset(output, 0, sizeof (output));
+
+    printf("This is designed by Apple in Cal.\n");
+
+    HMP3Decoder hmp3decoder = MP3InitDecoder();
+
+    FILE *fp = fopen("../audio/maria.mp3", "rb+");
+    fseek(fp, 0, SEEK_END);
+    int count = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    fread(buffer, count, 1, fp);
+
+    int offset = 0;
+    unsigned char *p = buffer;
+    int left = count;
+    static int k = 0;
+    while (1) {
+        offset = MP3FindSyncWord(p, count);
+        if(offset<0) {printf("offset:%d", offset);break;}
+
+        left -= offset;
+        /* printf("offset:%d -- count:%d\r\n", offset, count); */
+        p += offset;
+        count -= offset;
+        /* printf("Frame P:0x%08X\r\n", p); */
+        int err = MP3Decode(hmp3decoder, &p, &left, targetPCM, 0);
+        //printf("Left:%d", offset);
+        //printf("error:%d\r\n", err);
+        MP3GetLastFrameInfo(hmp3decoder, &frameInfo);
+        /* printf("bitrate:%d nChans:%d samprate:%d bitsPerSample:%d outputSamps:%d layer:%d version:%d\r\n",
+               frameInfo.bitrate,
+               frameInfo.nChans, frameInfo.samprate, frameInfo.bitsPerSample, frameInfo.outputSamps, frameInfo.layer,
+               frameInfo.version);*/
+        /* MP3DecInfo *mp3DecInfo = (MP3DecInfo *)hmp3decoder;
+        printf("chans:%d -- GranSamps:%d -- Grans:%d\r\n", mp3DecInfo->nChans, mp3DecInfo->nGranSamps, mp3DecInfo->nGrans); */
+        for (int i = 0; i < 576; i++) {
+            //if (*(targetPCM + i) != 0)
+                printf("i:%04d value:%04d\r\n", i+576*k, *(targetPCM + i));
+                /*
+                 * printf("i:%04d value:%04d\r\n", i+576*k, *(targetPCM + i));
+                 * */
+        }
+        k++;
+    }
+
+    fclose(fp);
+    MP3FreeDecoder(hmp3decoder);
+
+    return 0;
+}
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include "../pub/mp3dec.h"
+#include "pub/mp3common.h"
+
+int main() {
+    int16_t output[10*1024];
+    int16_t targetPCM[1024];
+    unsigned char buffer[10*1024] = {0};
+    MP3FrameInfo frameInfo;
+
+    memset(targetPCM, 0, sizeof (targetPCM));
+    memset(output, 0, sizeof (output));
+
+    printf("This is designed by Apple in Cal.\n");
+
+    HMP3Decoder hmp3decoder = MP3InitDecoder();
+
+    FILE *fp = fopen("../audio/maria.mp3", "rb+");
+    fseek(fp, 0, SEEK_END);
+    int count = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    fread(buffer, count, 1, fp);
+
+    FILE *pcm = fopen("../audio/maria.pcm", "wb+");
+
+    int offset = 0;
+    unsigned char *p = buffer;
+    int left = count;
+    static int k = 0;
+    while (1) {
+        offset = MP3FindSyncWord(p, count);
+        if(offset<0) {printf("offset:%d", offset);break;}
+
+        left -= offset;
+        p += offset;
+        count -= offset;
+        int err = MP3Decode(hmp3decoder, &p, &left, targetPCM, 0);
+        printf("left:%d\r\n", left);
+        MP3GetLastFrameInfo(hmp3decoder, &frameInfo);
+        for (int i = 0; i < 576; i++) {
+//
+//
+//
+// printf("%04d, ", *(targetPCM + i));
+            //fwrite(targetPCM+i*576+i, 2, 1, pcm);
+            if((i+1)%16 == 0)
+                printf(". ");
+        }
+        k++;
+    }
+
+    fclose(fp);
+    fclose(pcm);
+    MP3FreeDecoder(hmp3decoder);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include "../pub/mp3dec.h"
+
+int main() {
+    int16_t targetPCM[10*1024];
+    int16_t targetFinal[5*1024];
+    MP3FrameInfo frameInfo;
+    unsigned char buffer[20*1024] = {0};
+
+    memset(targetPCM, 0, sizeof (targetPCM));
+
+    printf("This is designed by Apple in Cal.\n");
+
+    HMP3Decoder hmp3decoder = MP3InitDecoder();
+
+    FILE *fp = fopen("../audio/moon.mp3", "rb+");
+    fseek(fp, 0, SEEK_END);
+    int count = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    fread(buffer, count, 1, fp);
+
+    int offset = 0;
+    unsigned char *p = buffer;
+    int left = count;
+    static int k = 0;
+    FILE *pcm = fopen("../audio/maria.pcm", "wb+");
+    while (1) {
+        offset = MP3FindSyncWord(p, count);
+        if(offset<0) {printf("offset:%d", offset);break;}
+
+        left -= offset;
+        p += offset;
+        count -= offset;
+        int err = MP3Decode(hmp3decoder, &p, &left, targetPCM, 0);
+
+        MP3GetLastFrameInfo(hmp3decoder, &frameInfo);
+        /* printf("k:%d -- bitrate:%d nChans:%d samprate:%d bitsPerSample:%d outputSamps:%d layer:%d version:%d\r\n",k,
+               frameInfo.bitrate,
+               frameInfo.nChans, frameInfo.samprate, frameInfo.bitsPerSample, frameInfo.outputSamps, frameInfo.layer,
+               frameInfo.version); */
+        for(int i=0;i<frameInfo.outputSamps;i++)
+            if(i%2 == 0) targetFinal[(i+1)/2] = targetPCM[i];
+        fseek(fp, k*frameInfo.outputSamps, SEEK_SET);
+        fwrite(targetFinal, frameInfo.outputSamps, 1, pcm);
+        /*for (int i = 0; i < frameInfo.outputSamps; i++) {
+
+                fwrite(targetPCM+i*576+i, 2, 1, pcm);
+                //;printf("i:%04d value:%04d\r\n", i+576*k, *(targetPCM + i));
+        }*/
+        k++;
+    }
+
+    fclose(fp);
+    fclose(pcm);
+    MP3FreeDecoder(hmp3decoder);
+
+    return 0;
+}
+
+
+
+
+#include <math.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include "../pub/mp3dec.h"
+
+int main() {
+    int16_t targetPCM[10*1024];
+    MP3FrameInfo frameInfo;
+    unsigned char buffer[20*1024] = {0};
+
+    memset(targetPCM, 0, sizeof (targetPCM));
+
+    printf("This is designed by Apple in Cal.\n");
+
+    HMP3Decoder hmp3decoder = MP3InitDecoder();
+
+    FILE *fp = fopen("../audio/maria.mp3", "rb+");
+    fseek(fp, 0, SEEK_END);
+    int count = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    fread(buffer, count, 1, fp);
+
+    int offset = 0;
+    unsigned char *p = buffer;
+    int left = count;
+    static int k = 0;
+    FILE *pcm = fopen("../audio/maria.pcm", "wb+");
+    while (1) {
+        offset = MP3FindSyncWord(p, count);
+        if(offset<0) {printf("offset:%d", offset);break;}
+
+        left -= offset;
+        p += offset;
+        count -= offset;
+        int err = MP3Decode(hmp3decoder, &p, &left, targetPCM, 0);
+
+        MP3GetLastFrameInfo(hmp3decoder, &frameInfo);
+        /* printf("k:%d -- bitrate:%d nChans:%d samprate:%d bitsPerSample:%d outputSamps:%d layer:%d version:%d\r\n",k,
+               frameInfo.bitrate,
+               frameInfo.nChans, frameInfo.samprate, frameInfo.bitsPerSample, frameInfo.outputSamps, frameInfo.layer,
+               frameInfo.version); */
+        fseek(fp, k*frameInfo.outputSamps*2, SEEK_SET);
+        fwrite(targetPCM, frameInfo.outputSamps*2, 1, pcm);
+        long long sum = 0;
+        for (int i = 0; i < frameInfo.outputSamps; i++) {
+            sum += abs(*(targetPCM + i));
+        }
+        printf("k:%02d sum:%08d\r\n", k, sum);
+        k++;
+    }
+
+    fclose(fp);
+    fclose(pcm);
+    MP3FreeDecoder(hmp3decoder);
+
+    return 0;
+}
+
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include "../pub/mp3dec.h"
+
+typedef struct {
+    uint32_t OffsetBegin;
+    uint32_t OffsetEnd;
+} AudioOffset;
+
+char *array[] = {
+        "../Audio/1.mp3", "../Audio/bai.mp3", "../Audio/3.mp3", "../Audio/shi.mp3","../Audio/4.mp3", "../Audio/dian.mp3",
+        "../Audio/5.mp3", "../Audio/2.mp3", "../Audio/yuan.mp3"
+};
+static FILE *pcm = NULL;
+#define MAX_PCM_BUFF_SIZE 100*1024U
+void MP3_Decode(uint8_t *buffer, uint32_t length)
+{
+    int offset = 0;
+    unsigned char *p = buffer;
+    int left = length;
+    int k = 0;
+    int16_t *output = malloc(MAX_PCM_BUFF_SIZE);
+    MP3FrameInfo frameInfo;
+    AudioOffset audioOffset = {.OffsetBegin=0, .OffsetEnd=0};
+
+    HMP3Decoder hmp3decoder = MP3InitDecoder();
+    memset(output, MAX_PCM_BUFF_SIZE, 0);
+
+    while (1) {
+        offset = MP3FindSyncWord(p, left);
+        if (offset < 0) {
+            printf(".");
+            break;
+        }
+
+        left -= offset;
+        p += offset;
+        int err = MP3Decode(hmp3decoder, &p, &left, output, 0);
+        MP3GetLastFrameInfo(hmp3decoder, &frameInfo);
+#if 0
+        printf("Output Num:%d\r\n", frameInfo.outputSamps);
+#endif
+        if(audioOffset.OffsetBegin == 0)
+        {
+            for(int i=0;i<frameInfo.outputSamps;i++)
+            {
+                if(abs(*(output+i)) >= 50)
+                {
+                    audioOffset.OffsetBegin = 1;
+                    printf("\tFound ST:k:%d -- begin:%d -- \r\n", k+1, i);
+                    break;
+                }
+            }
+        }
+        if((audioOffset.OffsetBegin != 0) && (audioOffset.OffsetBegin != 0xFFFFFFFF))
+        {
+            fwrite(output + audioOffset.OffsetBegin, (frameInfo.outputSamps - audioOffset.OffsetBegin) * 2, 1, pcm);
+            audioOffset.OffsetBegin = 0xFFFFFFFF;
+        }else if(audioOffset.OffsetBegin == 0xFFFFFFFF)
+        {
+            fwrite(output, frameInfo.outputSamps*2, 1, pcm);
+        }
+        k++;
+    }
+    MP3FreeDecoder(hmp3decoder);
+    free(output);
+}
+
+int main() {
+    static int k = 0;
+    uint8_t *buffer = NULL;
+
+    buffer = (uint8_t *)malloc(128*1024);
+    printf("This is designed by Apple in Cal.\n");
+
+    pcm = fopen("../audio/maria.pcm", "wb+");
+
+    for(int mteaching=0;mteaching<9;mteaching++) {
+        FILE *fp = fopen(array[mteaching], "rb+");
+        fseek(fp, 0, SEEK_END);
+        int size = ftell(fp);
+        fseek(fp, 0, SEEK_SET);
+        printf("filename:%s -- size:%d bytes\r\n", array[mteaching], size);
+        fread(buffer, size, 1, fp);
+        MP3_Decode(buffer, size);
+        fclose(fp);
+    }
+
+    fclose(pcm);
+    free(buffer);
+
+    return 0;
+}

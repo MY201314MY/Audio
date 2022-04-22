@@ -1,0 +1,3 @@
+D:/project/CLion/Helix/cmake-build-debug/CMakeFiles/Helix.dir
+D:/project/CLion/Helix/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/project/CLion/Helix/cmake-build-debug/CMakeFiles/rebuild_cache.dir
